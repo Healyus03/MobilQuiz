@@ -26,7 +26,7 @@ public class QuizManager : MonoBehaviour
         "En sessionsfilterbrandvägg arbetar på datalänk- och nätverkslagret."
                              
     };
-
+// Array med svar (Sant eller Falskt) för varje fråga
     private bool[] answers = {
         false,
         false,  
@@ -42,7 +42,9 @@ public class QuizManager : MonoBehaviour
 
     void Start()
     {
+ // Visa den första frågan
         DisplayQuestion();
+ // Lägg till lyssnare för knapparna som kontrollerar svaren
         trueButton.onClick.AddListener(() => CheckAnswer(true));
         falseButton.onClick.AddListener(() => CheckAnswer(false));
     }
@@ -52,16 +54,19 @@ public class QuizManager : MonoBehaviour
         UpdateProgressText(); // Uppdatera progressionstexten i början
         if (currentQuestionIndex < questions.Length)
         {
+		//Visa nuvarande fråga
             questionText.text = questions[currentQuestionIndex];
         }
         else
         {
+ 			// Om inga fler frågor, visa resultatet
             questionText.text = (score + " av " + questions.Length + " rätt!");
+ 			// Göm knapparna när frågesporten är klar
             trueButton.gameObject.SetActive(false);
             falseButton.gameObject.SetActive(false);
         }
     }
-
+// Funktion för att kontrollera om användarens svar är korrekt
     void CheckAnswer(bool answer)
     {
         if (answer == answers[currentQuestionIndex])
@@ -77,11 +82,12 @@ public class QuizManager : MonoBehaviour
         currentQuestionIndex++;
         DisplayQuestion();
     }
-    
+    // Funktion för att uppdatera progressionstexten
     void UpdateProgressText()
     {
         if (currentQuestionIndex < questions.Length)
         {
+ // Uppdatera progressionstexten med nuvarande fråga och totala antalet frågor
             progressText.text = $"{currentQuestionIndex + 1}/{questions.Length}";
             questionText.text = questions[currentQuestionIndex];
         }
